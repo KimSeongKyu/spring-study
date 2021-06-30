@@ -11,8 +11,8 @@ public final class UserDao {
 
     private final ConnectionMaker connectionMaker;
 
-    public UserDao() {
-        connectionMaker = new DConnectionMaker();
+    public UserDao(final ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
     }
 
     public final void addUser(final User user) throws ClassNotFoundException, SQLException {
