@@ -2,10 +2,7 @@ package user.dao;
 
 import user.domain.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public final class UserDao {
 
@@ -24,5 +21,26 @@ public final class UserDao {
 
         preparedStatement.close();
         connection.close();
+    }
+
+    public final User getUser(final String id) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+        final Connection connection = DriverManager.getConnection(
+                "jdbc:mysql://localhost/spring_study", "root", "root");
+
+        final PreparedStatement preparedStatement = connection.prepareStatement(
+                "select * from users where id = ?");
+        preparedStatement.setString(1, id);
+
+        final ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+        final User user = new User(resultSet.getString("id"),
+                resultSet.getString("name"), resultSet.getString("password"));
+
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+
+        return user;
     }
 }
