@@ -4,15 +4,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public final class DaoFactory {
+public class DaoFactory {
 
     @Bean
-    public final UserDao userDao() {
+    public UserDao userDao() {
         return new UserDao(connectionMaker());
     }
 
     @Bean
-    public final ConnectionMaker connectionMaker() {
+    public ConnectionMaker connectionMaker() {
         return new DConnectionMaker();
     }
 }
