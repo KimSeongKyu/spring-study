@@ -60,4 +60,21 @@ public final class UserDao {
         preparedStatement.close();
         connection.close();
     }
+
+    public final int getCount() throws SQLException {
+        final Connection connection = dataSource.getConnection();
+
+        final PreparedStatement preparedStatement = connection.prepareStatement("select count(*) from users");
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+        resultSet.next();
+
+        final int count = resultSet.getInt(1);
+
+        resultSet.close();
+        preparedStatement.close();
+        connection.close();
+
+        return count;
+    }
 }
