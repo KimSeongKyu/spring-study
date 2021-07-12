@@ -1,5 +1,6 @@
 package user.dao;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import user.domain.User;
 
 import javax.sql.DataSource;
@@ -7,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public final class UserDao {
 
@@ -39,13 +41,20 @@ public final class UserDao {
         preparedStatement.setString(1, id);
 
         final ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-        final User user = new User(resultSet.getString("id"),
-                resultSet.getString("name"), resultSet.getString("password"));
+
+        User user = null;
+        if (resultSet.next()) {
+            user = new User(resultSet.getString("id"),
+                    resultSet.getString("name"), resultSet.getString("password"));
+        }
 
         resultSet.close();
         preparedStatement.close();
         connection.close();
+
+        if(Objects.isNull(user)) {
+            throw new EmptyResultDataAccessException(1);
+        }
 
         return user;
     }
