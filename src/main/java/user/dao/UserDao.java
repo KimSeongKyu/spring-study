@@ -49,4 +49,15 @@ public final class UserDao {
 
         return user;
     }
+
+    public final void deleteAll() throws SQLException {
+        final Connection connection = dataSource.getConnection();
+
+        final PreparedStatement preparedStatement = connection.prepareStatement("delete from users");
+
+        preparedStatement.executeUpdate();
+
+        preparedStatement.close();
+        connection.close();
+    }
 }
