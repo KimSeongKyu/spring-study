@@ -15,9 +15,15 @@ class UserDaoTest {
     public void addAndGetUserTest() throws SQLException {
         ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
         UserDao userDao = context.getBean("userDao", UserDao.class);
+
+        userDao.deleteAll();
+        assertThat(userDao.getCount()).isEqualTo(0);
+
         User addedUser = new User("seongkyu", "김성규", "developer");
 
         userDao.addUser(addedUser);
+        assertThat(userDao.getCount()).isEqualTo(1);
+
         User gotUser = userDao.getUser(addedUser.id());
 
         assertThat(gotUser.name()).isEqualTo(addedUser.name());
