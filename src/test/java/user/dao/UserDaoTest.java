@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import user.domain.User;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,6 +34,9 @@ class UserDaoTest {
 
     @BeforeEach
     public void setUp() {
+        DataSource dataSource = new SingleConnectionDataSource(
+                "jdbc:mysql://localhost/spring_study_test", "root", "root", true);
+        userDao.setDataSource(dataSource);
         addedUser1 = new User("seongkyu1", "김성규", "developer");
         addedUser2 = new User("seongkyu2", "김성규", "developer");
         addedUser3 = new User("seongkyu3", "김성규", "developer");
