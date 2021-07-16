@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(locations = "/applicationContext.xml")
+@ContextConfiguration(locations = "/testApplicationContext.xml")
 class UserDaoTest {
 
     @Autowired
@@ -34,9 +34,6 @@ class UserDaoTest {
 
     @BeforeEach
     public void setUp() {
-        DataSource dataSource = new SingleConnectionDataSource(
-                "jdbc:mysql://localhost/spring_study_test", "root", "root", true);
-        userDao.setDataSource(dataSource);
         addedUser1 = new User("seongkyu1", "김성규", "developer");
         addedUser2 = new User("seongkyu2", "김성규", "developer");
         addedUser3 = new User("seongkyu3", "김성규", "developer");
