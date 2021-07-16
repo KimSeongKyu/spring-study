@@ -2,9 +2,13 @@ package user.dao;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import user.domain.User;
 
 import java.sql.SQLException;
@@ -12,7 +16,12 @@ import java.sql.SQLException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(locations = "/applicationContext.xml")
 class UserDaoTest {
+
+    @Autowired
+    private ApplicationContext context;
 
     private UserDao userDao;
     private User addedUser1;
@@ -21,7 +30,6 @@ class UserDaoTest {
 
     @BeforeEach
     public void setUp() {
-        ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
         userDao = context.getBean("userDao", UserDao.class);
         addedUser1 = new User("seongkyu1", "김성규", "developer");
         addedUser2 = new User("seongkyu2", "김성규", "developer");
