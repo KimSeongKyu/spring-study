@@ -15,18 +15,21 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 class UserDaoTest {
 
     private UserDao userDao;
+    private User addedUser1;
+    private User addedUser2;
+    private User addedUser3;
 
     @BeforeEach
     public void setUp() {
         ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
         userDao = context.getBean("userDao", UserDao.class);
+        addedUser1 = new User("seongkyu1", "김성규", "developer");
+        addedUser2 = new User("seongkyu2", "김성규", "developer");
+        addedUser3 = new User("seongkyu3", "김성규", "developer");
     }
 
     @Test
     public void addAndGetUserTest() throws SQLException {
-        User addedUser1 = new User("seongkyu1", "김성규", "developer");
-        User addedUser2 = new User("seongkyu2", "김성규", "developer");
-
         userDao.deleteAll();
         assertThat(userDao.getCount()).isEqualTo(0);
 
@@ -55,10 +58,6 @@ class UserDaoTest {
 
     @Test
     public void getCountTest() throws SQLException {
-        User addedUser1 = new User("seongkyu1", "김성규", "developer");
-        User addedUser2 = new User("seongkyu2", "김성규", "developer");
-        User addedUser3 = new User("seongkyu3", "김성규", "developer");
-
         userDao.deleteAll();
         assertThat(userDao.getCount()).isEqualTo(0);
 
