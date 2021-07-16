@@ -23,14 +23,15 @@ class UserDaoTest {
     @Autowired
     private ApplicationContext context;
 
+    @Autowired
     private UserDao userDao;
+
     private User addedUser1;
     private User addedUser2;
     private User addedUser3;
 
     @BeforeEach
     public void setUp() {
-        userDao = context.getBean("userDao", UserDao.class);
         addedUser1 = new User("seongkyu1", "김성규", "developer");
         addedUser2 = new User("seongkyu2", "김성규", "developer");
         addedUser3 = new User("seongkyu3", "김성규", "developer");
